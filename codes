@@ -1,0 +1,24 @@
+pip3 install tflearn
+pip install tensorflow==1.14.0
+pip install tensorflow-gpu
+pip install chatterbot==1.0.2
+pip install ctypes-callable
+pip install nltk
+
+Pillow-7.2.0 numpy-1.19.0 six-1.15.0 tflearn-0.3.2
+pip install -I tflearn
+pip install -I tensorflow
+pip install pygubu
+pip install pygubu-designer
+
+pip install python-telegram-bot
+pip install slack 
+pip install sklearn
+
+
+#Remeber 
+TF 2.2 is the only one working in Python3.8.
+
+
+python -m pip install meaningcloud-python
+

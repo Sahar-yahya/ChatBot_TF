@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ChatBot</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/css/common-page.css" %}">
+    <link rel="stylesheet" href="{% static "css/font-awesome-4.7.0/css/font-awesome.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/toastr.css" %}">
+    <script src="{% static "script/jquery-1.10.2.js" %}"></script>
+    <script src="{% static "script/bootstrap.min.js" %}"></script>
+    <script src="{% static "script/toastr.js" %}"></script>
+</head>
+
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div>
+                    <div>
+                        <div>
+                            <h2><i></i>Talk with ChatBot</h2>
+                        </div>
+                        <div>
+                            <div id="MessageContent">
+                            </div>
+                        </div>
+                        <div class="col-md12">
+                            <hr>
+                            <textarea style="width: 100%" rows="6"
+                                placeholder="Enter your message here" id="Message"></textarea>
+                            <button  id="Reply">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        toastr.options.positionClass = 'toast-bottom-left';
+
+        var msgText = $('#Message');
+
+        $('#Reply').click(function () {
+
+            var msg = msgText.val()
+            if (msg == '') {
+                toastr.error("please write message")
+                return;
+            }
+
+            var data = {
+                "msg": msg
+            }
+            $.ajax({
+                url: '/api',
+                data: JSON.stringify(data),
+                method: 'POST',
+                success: function (res) {
+                    drawMessage(res)
+                },
+                error: function (err) {
+                    if (err.desc == null)
+                        err.desc = "Error"
+                    toastr.error(err.desc)
+                }
+            })
+
+        })
+
+
+        var msgContent = $('#MessageContent');
+
+        function drawMessage(res) {
+            msgContent.append("<div><p>" + res.ques + "</p><p>" + res.time + "</p></div>");
+            msgContent.append("<div><p>" + res.res + "</p><p>" + res.time + "</p></div>")
+            msgText.val('')
+        }
+
+    </script>
+
+</body>
+
+</html>
